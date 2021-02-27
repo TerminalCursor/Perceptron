@@ -4,9 +4,15 @@
 #define EP 0.00001
 #define NUM 2
 
-struct Neuron {
-	double value;
-	struct Neuron* prev;
+struct Layer {
+	short count;
+	double* values;
+};
+
+struct Weights {
+	struct Layer* prev;
+	struct Layer* next;
+	double** values; // next->count x prev->count;
 };
 
 double Lerr(double target, double value) {
@@ -17,7 +23,7 @@ int main() {
 	time_t ti;
 	srand((unsigned) time(&ti));
 	double I[NUM] = {5.0, 7.0};
-	double WL[NUM][NUM] = {{3.0, 2.0},{2.0, 3.0}};
+	double WL[NUM][NUM] = {{1.0, 0.0},{0.0, 1.0}};
 	double L[NUM] = {I[0]*WL[0][0] + I[1]*WL[0][1], I[0]*WL[1][0]+I[1]*WL[1][1]};
 	double WO[NUM] = {3.0, 2.0};
 	double o = L[0]*WO[0] + L[1]*WO[1];
